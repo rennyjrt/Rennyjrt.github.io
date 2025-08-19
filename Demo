@@ -1,0 +1,384 @@
+import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Github, Linkedin, Mail, Shield, Terminal, Globe, Cpu, Network, Lock, Phone, FileDown, ArrowRight, Stars, MapPin } from "lucide-react";
+
+// ————————————————————————————————————————————————————————————
+// Cyberpunk Portfolio — Single-file React component (Tailwind + shadcn/ui)
+// Replace placeholder content with your data below. Designed for dark neon themes.
+// ————————————————————————————————————————————————————————————
+
+const projects = [
+  {
+    title: "Home SOC Lab",
+    tagline: "SIEM + IDS + Honeypot",
+    description:
+      "Laboratorio casero con SIEM, detección de intrusos y honeypots. Dashboards de alertas, pipelines de ingestión y playbooks de respuesta.",
+    stack: ["Linux", "Suricata", "Zeek", "Elastic", "Wazuh", "Docker"],
+    link: "#",
+    repo: "#",
+  },
+  {
+    title: "Hardening Linux Toolkit",
+    tagline: "Auditoría y reforzamiento",
+    description:
+      "Colección de scripts para verificar CIS benchmarks, aplicar hardening y generar reportes antes/después con diffs.",
+    stack: ["Bash", "Ansible", "CIS", "Lynis"],
+    link: "#",
+    repo: "#",
+  },
+  {
+    title: "Traffic Intel Parser",
+    tagline: "PCAP → Insights",
+    description:
+      "Parser de PCAP y flujos para extraer IOC, detectar patrones y generar un informe PDF con hallazgos priorizados.",
+    stack: ["Python", "Scapy", "Pandas", "ReportLab"],
+    link: "#",
+    repo: "#",
+  },
+];
+
+const skills = [
+  { name: "Linux", level: 90, icon: <Terminal className="size-4" /> },
+  { name: "Redes", level: 85, icon: <Network className="size-4" /> },
+  { name: "SIEM / SOC", level: 80, icon: <Shield className="size-4" /> },
+  { name: "Hardening", level: 85, icon: <Lock className="size-4" /> },
+  { name: "Scripting", level: 75, icon: <Cpu className="size-4" /> },
+];
+
+const certs = [
+  { name: "(ISC)² CC", org: "(ISC)²", year: "2025" },
+  { name: "Cisco CCST Cybersecurity (en progreso)", org: "Cisco", year: "2025" },
+  { name: "Cloud Practitioner", org: "AWS", year: "2024" },
+];
+
+const neon = {
+  bg: "bg-[#070716]",
+  ink: "text-[#E2E8F0]",
+  primary: "#00FFF0",
+  secondary: "#FF2DF1",
+  accent: "#9AE6B4",
+};
+
+function useGlitch(interval = 3200) {
+  const [seed, setSeed] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setSeed((s) => s + 1), interval);
+    return () => clearInterval(t);
+  }, [interval]);
+  return seed;
+}
+
+export default function PortfolioCyberpunk() {
+  const g = useGlitch();
+  const year = new Date().getFullYear();
+
+  return (
+    <div className={`${neon.bg} ${neon.ink} min-h-screen font-sans relative overflow-x-clip`}>
+      {/* Holographic grid background */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-30 [mask-image:radial-gradient(circle_at_center,black,transparent_70%)]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,240,0.12),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(transparent_95%,rgba(255,255,255,0.05)_100%),linear-gradient(90deg,transparent_95%,rgba(255,255,255,0.05)_100%)] bg-[length:30px_30px]" />
+      </div>
+
+      {/* Top neon border scanline */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#00FFF0] to-transparent animate-pulse" />
+
+      {/* Navbar */}
+      <nav className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/30 border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Stars className="size-5 text-cyan-300" />
+            <span className="tracking-widest text-sm text-cyan-200">RENNY • CYBERSEC</span>
+          </div>
+          <div className="hidden md:flex items-center gap-4 text-sm">
+            {[
+              ["Inicio", "#inicio"],
+              ["Proyectos", "#proyectos"],
+              ["Skills", "#skills"],
+              ["Certificaciones", "#certs"],
+              ["Contacto", "#contacto"],
+            ].map(([label, href]) => (
+              <a key={href} href={href} className="hover:text-cyan-300 transition-colors">
+                {label}
+              </a>
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
+            <a href="#cv" className="hidden sm:block">
+              <Button variant="secondary" className="bg-cyan-500/10 border border-cyan-400/50 hover:bg-cyan-500/20">
+                <FileDown className="mr-2 size-4" /> Descargar CV
+              </Button>
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section id="inicio" className="relative">
+        <div className="max-w-6xl mx-auto px-4 py-20 md:py-28">
+          <motion.h1
+            key={g}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", bounce: 0.3, duration: 0.8 }}
+            className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight"
+          >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-cyan-300">
+              Analista de Ciberseguridad
+            </span>
+            <br />
+            <span className="text-slate-300">Defensa • Detección • Respuesta</span>
+          </motion.h1>
+
+          <p className="max-w-2xl mt-6 text-slate-300/90">
+            Fortalezco sistemas Linux, diseño laboratorios SOC, automatizo análisis de tráfico y creo playbooks para respuesta a incidentes. Me enfoco en
+            <span className="text-cyan-300"> hardening</span>,
+            <span className="text-fuchsia-300"> monitoreo</span> y
+            <span className="text-emerald-300"> threat hunting</span>.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Badge className="bg-cyan-500/15 border border-cyan-400/40">Linux</Badge>
+            <Badge className="bg-fuchsia-500/15 border border-fuchsia-400/40">SIEM</Badge>
+            <Badge className="bg-emerald-500/15 border border-emerald-400/40">IDS/IPS</Badge>
+            <Badge className="bg-cyan-500/15 border border-cyan-400/40">Red Team Basics</Badge>
+            <Badge className="bg-fuchsia-500/15 border border-fuchsia-400/40">Scripting</Badge>
+          </div>
+
+          <div className="mt-10 flex flex-wrap gap-3">
+            <a href="https://github.com/" target="_blank" rel="noreferrer" className="group">
+              <Button className="bg-cyan-500/20 border border-cyan-400/40 hover:bg-cyan-500/30">
+                <Github className="mr-2 size-4" /> GitHub
+                <ArrowRight className="ml-2 size-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition" />
+              </Button>
+            </a>
+            <a href="https://linkedin.com/" target="_blank" rel="noreferrer" className="group">
+              <Button variant="outline" className="border-fuchsia-400/40 hover:bg-fuchsia-500/10">
+                <Linkedin className="mr-2 size-4" /> LinkedIn
+                <ArrowRight className="ml-2 size-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition" />
+              </Button>
+            </a>
+            <a href="#contacto" className="group">
+              <Button variant="secondary" className="bg-emerald-500/15 border border-emerald-400/40 hover:bg-emerald-500/25">
+                <Mail className="mr-2 size-4" /> Contacto
+                <ArrowRight className="ml-2 size-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition" />
+              </Button>
+            </a>
+          </div>
+        </div>
+
+        {/* scanline + glow */}
+        <div aria-hidden className="absolute left-0 right-0 -bottom-px h-px bg-gradient-to-r from-transparent via-fuchsia-500/60 to-transparent" />
+      </section>
+
+      {/* Projects */}
+      <section id="proyectos" className="relative">
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold">Proyectos</h2>
+            <div className="text-xs text-slate-400">{projects.length} repos • live demos</div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects.map((p, i) => (
+              <motion.div
+                key={p.title}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: i * 0.05 }}
+              >
+                <Card className="group relative overflow-hidden border-white/10 bg-white/5 backdrop-blur hover:border-cyan-400/40 hover:bg-cyan-400/5 transition-all">
+                  <div aria-hidden className="absolute -inset-1 opacity-0 group-hover:opacity-100 blur-2xl bg-gradient-to-r from-cyan-500/10 via-fuchsia-500/10 to-emerald-500/10 transition" />
+
+                  <CardHeader className="relative">
+                    <CardTitle className="flex items-start justify-between">
+                      <span className="text-lg">{p.title}</span>
+                      <span className="text-xs text-slate-400">{p.tagline}</span>
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardContent className="relative">
+                    <p className="text-sm text-slate-300/90 mb-4 min-h-[64px]">{p.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {p.stack.map((s) => (
+                        <Badge key={s} variant="outline" className="border-white/20">
+                          {s}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <a href={p.link} target="_blank" rel="noreferrer">
+                        <Button size="sm" className="bg-cyan-500/20 border border-cyan-400/40 hover:bg-cyan-500/30">
+                          <Globe className="mr-2 size-4" /> Demo
+                        </Button>
+                      </a>
+                      <a href={p.repo} target="_blank" rel="noreferrer">
+                        <Button size="sm" variant="outline" className="border-fuchsia-400/40 hover:bg-fuchsia-500/10">
+                          <Github className="mr-2 size-4" /> Código
+                        </Button>
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        <div aria-hidden className="absolute left-0 right-0 -bottom-px h-px bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+      </section>
+
+      {/* Skills */}
+      <section id="skills" className="relative">
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20">
+          <h2 className="text-2xl md:text-3xl font-bold mb-8">Skills</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {skills.map((s) => (
+              <Card key={s.name} className="border-white/10 bg-white/5 backdrop-blur">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2 text-cyan-200">
+                      {s.icon}
+                      <span className="font-medium">{s.name}</span>
+                    </div>
+                    <span className="text-xs text-slate-400">{s.level}%</span>
+                  </div>
+                  <div className="h-2 w-full rounded bg-white/10 overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-emerald-400"
+                      style={{ width: `${s.level}%` }}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+        <div aria-hidden className="absolute left-0 right-0 -bottom-px h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent" />
+      </section>
+
+      {/* Certifications */}
+      <section id="certs" className="relative">
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">Certificaciones</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {certs.map((c) => (
+              <Card key={c.name} className="border-white/10 bg-white/5 backdrop-blur">
+                <CardHeader>
+                  <CardTitle className="text-base flex items-center justify-between">
+                    <span>{c.name}</span>
+                    <span className="text-xs text-slate-400">{c.year}</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-slate-400">Institución: {c.org}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+        <div aria-hidden className="absolute left-0 right-0 -bottom-px h-px bg-gradient-to-r from-transparent via-fuchsia-500/60 to-transparent" />
+      </section>
+
+      {/* Contact */}
+      <section id="contacto" className="relative">
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20">
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Contacto</h2>
+              <p className="text-slate-300/90">
+                ¿Buscás alguien que levante un SOC desde cero, endurezca servidores y automatice
+                análisis? Hablemos.
+              </p>
+
+              <div className="mt-6 space-y-2 text-sm text-slate-300/90">
+                <div className="flex items-center gap-2"><Mail className="size-4 text-cyan-300" /><span>renny@example.com</span></div>
+                <div className="flex items-center gap-2"><Phone className="size-4 text-cyan-300" /><span>+54 11 5555-5555</span></div>
+                <div className="flex items-center gap-2"><Globe className="size-4 text-cyan-300" /><span>Buenos Aires, AR</span></div>
+              </div>
+
+              <div className="mt-6 flex gap-3">
+                <a href="https://github.com/" target="_blank" rel="noreferrer" className="group">
+                  <Button variant="outline" className="border-white/20 hover:bg-white/10">
+                    <Github className="mr-2 size-4" /> GitHub
+                  </Button>
+                </a>
+                <a href="https://linkedin.com/" target="_blank" rel="noreferrer" className="group">
+                  <Button variant="outline" className="border-white/20 hover:bg-white/10">
+                    <Linkedin className="mr-2 size-4" /> LinkedIn
+                  </Button>
+                </a>
+              </div>
+            </div>
+
+            <Card className="border-white/10 bg-white/5 backdrop-blur">
+              <CardContent className="pt-6">
+                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-slate-400">Nombre</label>
+                      <Input placeholder="Tu nombre" className="bg-black/40 border-white/15" />
+                    </div>
+                    <div>
+                      <label className="text-xs text-slate-400">Email</label>
+                      <Input placeholder="tunombre@mail.com" type="email" className="bg-black/40 border-white/15" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs text-slate-400">Mensaje</label>
+                    <Textarea placeholder="Contame sobre tu proyecto" className="bg-black/40 border-white/15 min-h-32" />
+                  </div>
+                  <Button type="submit" className="w-full bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/30 border border-white/20 hover:from-cyan-500/40 hover:to-fuchsia-500/40">
+                    Enviar
+                  </Button>
+                  <p className="text-[10px] text-slate-500 text-center">Este formulario es de muestra. Reemplázalo con tu servicio (Formspree, Resend, etc.).</p>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+        <div aria-hidden className="absolute left-0 right-0 -bottom-px h-px bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+      </section>
+
+      {/* Footer */}
+      <footer className="relative border-t border-white/10">
+        <div className="max-w-6xl mx-auto px-4 py-10 text-sm text-slate-400 flex flex-col md:flex-row items-center md:justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Shield className="size-4 text-cyan-300" />
+            <span>© {year} Renny Rodriguez — "Trust, but verify"</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1"><MapPin className="size-4" /> Buenos Aires</span>
+            <span className="flex items-center gap-1"><Globe className="size-4" /> renny.dev</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* Floating nav */}
+      <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40">
+        <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur px-3 py-1.5 flex gap-3 text-xs">
+          {[
+            ["Inicio", "#inicio"],
+            ["Proyectos", "#proyectos"],
+            ["Skills", "#skills"],
+            ["Certs", "#certs"],
+            ["Contacto", "#contacto"],
+          ].map(([label, href]) => (
+            <a key={href} href={href} className="hover:text-cyan-300">
+              {label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* CRT edge + vignette */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 ring-1 ring-white/5 [mask-image:radial-gradient(ellipse_at_center,black,transparent_65%)]" />
+    </div>
+  );
+}
